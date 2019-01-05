@@ -12,7 +12,8 @@ export default class Separator extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Dash style={{width:100, height:1}}/>
+                <Dash style={{width: 300, height: 1}} dashThickness={1} dashLength={16} dashGap={8}
+                      dashColor={'#838383'}/>
             </View>
         )
     }

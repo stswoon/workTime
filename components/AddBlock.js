@@ -6,7 +6,7 @@ export default class AddBlock extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <RkButton rkType='xlarge outline circle'>+</RkButton>
+                <RkButton rkType='xlarge outline circle' onPress={() => this.props.onClick()}>+</RkButton>
             </View>
         );
     }

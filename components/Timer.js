@@ -1,6 +1,7 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
-import {RkButton, RkText} from "react-native-ui-kitten";
+import {StyleSheet, TextInput, View} from "react-native";
+import {RkButton, RkText, RkTextInput} from "react-native-ui-kitten";
+import RemoveTimerModal from "./RemoveTimerModal";
 
 const styles = StyleSheet.create({
     container: {
@@ -27,7 +28,10 @@ const styles = StyleSheet.create({
         marginBottom: 1,
         marginRight: 30
     },
-    name: {},
+    name: {
+        width: 100,
+        margin: 1
+    },
     lineText: {
         flex: 1,
         flexDirection: 'row',
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
 
 export default class Timer extends React.Component {
     state = {
-        time: 0
+        showDialog: false,
     };
 
     render() {
@@ -53,10 +57,13 @@ export default class Timer extends React.Component {
                     <RkButton rkType='xlarge' style={styles.button} onPress={() => this.click(-60)}>-1h</RkButton>
                     <RkButton rkType='xlarge' style={styles.button} onPress={() => this.click(-15)}>-15'</RkButton>
                     <RkButton rkType='xlarge' style={styles.button} onPress={() => this.click(-5)}>-5'</RkButton>
+                    <RkTextInput rkType='xlarge' placeholder='Time Name' style={styles.name}
+                                 onChangeText={text => this.setName(text)} value={this.props.name}
+                    />
                 </View>
                 <View style={styles.lineText}>
-                    <RkText rkType={'xlarge' + this.formatColor(this.state.time)}
-                            style={styles.text}>{this.format(this.state.time)}</RkText>
+                    <RkText rkType={'xlarge' + this.formatColor(this.props.time)}
+                            style={styles.text}>{this.format(this.props.time)}</RkText>
                 </View>
                 <View style={styles.line}>
                     <RkButton rkType='xlarge danger' style={styles.buttonRemove} onPress={this.askRemove}>X</RkButton>
@@ -64,16 +71,32 @@ export default class Timer extends React.Component {
                     <RkButton rkType='xlarge' style={styles.button} onPress={() => this.click(+15)}>+15'</RkButton>
                     <RkButton rkType='xlarge' style={styles.button} onPress={() => this.click(+60)}>+1h</RkButton>
                 </View>
+
+                {
+                    this.state.showDialog &&
+                    <RemoveTimerModal timerName={this.props.name} onClick={flag => this.handleModalClick(flag)}/>
+                }
             </View>
         );
     }
 
     click(value) {
-        this.setState({time: this.state.time + value});
+        this.props.onChange({name: this.props.name, time: this.props.time + value});
+    }
+
+    setName(text) {
+        this.props.onChange({name: text, time: this.props.time});
     }
 
     askRemove() {
+        this.setState({showModal: true})
+    }
 
+    handleModalClick(flag) {
+        if (flag) {
+            this.props.onRemove(this.props.id);
+        }
+        this.setState({showModal: false});
     }
 
     format(time) {
