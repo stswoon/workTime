@@ -1,11 +1,12 @@
-import React from "react";
+import React from "react"
+import {StyleSheet, View} from "react-native";
 import {ConfirmDialog} from "react-native-simple-dialogs";
 
 export default class RemoveTimerModal extends React.Component {
     render() {
         const msg = "Remove timer with name '" + this.props.timerName + "' ?";
         return (
-            <ConfirmDialog>
+            <View>
                 <ConfirmDialog
                     title='' message={msg} visible={true}
                     positiveButton={{

@@ -16,49 +16,55 @@ export default class TimeManager extends React.Component {
         const timers = this.state.timers;
         let innerView = [];
         if (timers.length === 0) {
-            innerView.push(<AddBlock onClick={() => this.addTimer()}/>);
+            innerView.push(<AddBlock key='add' onClick={() => this.addTimer()}/>);
         } else if (timers.length === 1) {
+            let timer = timers[0];
             innerView.push(
-                <Timer id={timers[0].id} name={timers[0].name} time={timers[0].time}
+                <Timer key={'timer_' + timer.id} {...timer}
                        onRemove={() => this.removeTimer(timers[0])}
                        onChange={data => this.changeTimer(timers[0], data)}
                 />
             );
-            innerView.push(<Separator/>);
-            innerView.push(<AddBlock onClick={() => this.addTimer()}/>);
+            innerView.push(<Separator key='separator_0'/>);
+            innerView.push(<AddBlock key='add' onClick={() => this.addTimer()}/>);
         } else if (timers.length === 2) {
+            let timer = timers[0];
             innerView.push(
-                <Timer id={timers[0].id} name={timers[0].name} time={timers[0].time}
+                <Timer key={'timer_' + timer.id} {...timer}
                        onRemove={() => this.removeTimer(timers[0])}
                        onChange={data => this.changeTimer(timers[0], data)}
                 />
             );
-            innerView.push(<Separator/>);
+            innerView.push(<Separator key='separator_0'/>);
+            timer = timers[1];
             innerView.push(
-                <Timer id={timers[1].id} name={timers[1].name} time={timers[1].time}
+                <Timer key={'timer_' + timer.id} {...timer}
                        onRemove={() => this.removeTimer(timers[1])}
                        onChange={data => this.changeTimer(timers[1], data)}
                 />
             );
-            innerView.push(<Separator/>);
-            innerView.push(<AddBlock onClick={() => this.addTimer()}/>);
+            innerView.push(<Separator key='separator_1'/>);
+            innerView.push(<AddBlock key='add' onClick={() => this.addTimer()}/>);
         } else if (timers.length === 3) {
+            let timer = timers[0];
             innerView.push(
-                <Timer id={timers[0].id} name={timers[0].name} time={timers[0].time}
+                <Timer key={'timer_' + timer.id} {...timer}
                        onRemove={() => this.removeTimer(timers[0])}
                        onChange={data => this.changeTimer(timers[0], data)}
                 />
             );
-            innerView.push(<Separator/>);
+            innerView.push(<Separator key='separator_0'/>);
+            timer = timers[1];
             innerView.push(
-                <Timer id={timers[1].id} name={timers[1].name} time={timers[1].time}
+                <Timer key={'timer_' + timer.id} {...timer}
                        onRemove={() => this.removeTimer(timers[1])}
                        onChange={data => this.changeTimer(timers[1], data)}
                 />
             );
-            innerView.push(<Separator/>);
+            innerView.push(<Separator key='separator_1'/>);
+            timer = timers[2];
             innerView.push(
-                <Timer id={timers[2].id} name={timers[2].name} time={timers[2].time}
+                <Timer key={'timer_' + timer.id} {...timer}
                        onRemove={() => this.removeTimer(timers[2])}
                        onChange={data => this.changeTimer(timers[2], data)}
                 />
@@ -75,7 +81,17 @@ export default class TimeManager extends React.Component {
 
     addTimer() {
         let timers = this.state.timers;
-        timers.push({id: uuid.v4(), name: 'Timer ' + timers.length, time: 0});
+
+        let timerNames = timers.map(item => item.name);
+        let timerName = 'Timer 1';
+        if (timerNames.includes(timerName)) {
+            timerName = 'Timer 2';
+        }
+        if (timerNames.includes(timerName)) {
+            timerName = 'Timer 3';
+        }
+
+        timers.push({id: uuid.v4(), name: timerName, time: 0});
         this.setState({timers});
     }
 

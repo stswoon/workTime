@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, TextInput, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {RkButton, RkText, RkTextInput} from "react-native-ui-kitten";
 import RemoveTimerModal from "./RemoveTimerModal";
 
@@ -66,16 +66,19 @@ export default class Timer extends React.Component {
                             style={styles.text}>{this.format(this.props.time)}</RkText>
                 </View>
                 <View style={styles.line}>
-                    <RkButton rkType='xlarge danger' style={styles.buttonRemove} onPress={this.askRemove}>X</RkButton>
+                    <RkButton rkType='xlarge danger' style={styles.buttonRemove}
+                              onPress={() => this.askRemove()}>X</RkButton>
                     <RkButton rkType='xlarge' style={styles.button} onPress={() => this.click(+5)}>+5'</RkButton>
                     <RkButton rkType='xlarge' style={styles.button} onPress={() => this.click(+15)}>+15'</RkButton>
                     <RkButton rkType='xlarge' style={styles.button} onPress={() => this.click(+60)}>+1h</RkButton>
                 </View>
 
+                <View>
                 {
                     this.state.showDialog &&
-                    <RemoveTimerModal timerName={this.props.name} onClick={flag => this.handleModalClick(flag)}/>
+                   <RemoveTimerModal timerName={this.props.name} onClick={flag => this.handleModalClick(flag)}/>
                 }
+                </View>
             </View>
         );
     }
@@ -89,14 +92,14 @@ export default class Timer extends React.Component {
     }
 
     askRemove() {
-        this.setState({showModal: true})
+        this.setState({showDialog: true})
     }
 
     handleModalClick(flag) {
         if (flag) {
             this.props.onRemove(this.props.id);
         }
-        this.setState({showModal: false});
+        this.setState({showDialog: false});
     }
 
     format(time) {

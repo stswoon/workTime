@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'stretch',
-        marginTop: 30
+        //marginTop: 30
+        marginTop: 0
     }
 });
