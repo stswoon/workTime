@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, AsyncStorage} from 'react-native';
 import Timer from "./Timer";
 import Separator from "./Separator";
 import uuid from 'react-native-uuid';
@@ -92,12 +92,12 @@ export default class TimeManager extends React.Component {
         }
 
         timers.push({id: uuid.v4(), name: timerName, time: 0});
-        this.setState({timers});
+        this.setState({timers}, () => this.saveData());
     }
 
     removeTimer(timer) {
         let timers = this.state.timers.filter(item => item !== timer);
-        this.setState({timers});
+        this.setState({timers}, () => this.saveData());
     }
 
     changeTimer(timer, data) {
@@ -108,7 +108,24 @@ export default class TimeManager extends React.Component {
                 return item;
             }
         });
-        this.setState({timers});
+        this.setState({timers}, () => this.saveData());
+    }
+
+    saveData() {
+        let dataAsString = JSON.stringify(this.state);
+        AsyncStorage.setItem('stswoon.workTime.data', dataAsString);
+    }
+
+    loadData() {
+        AsyncStorage.getItem('stswoon.workTime.data').then(dataAsString => {
+            if (dataAsString != null) {
+                this.setState(JSON.parse(dataAsString));
+            }
+        });
+    }
+
+    componentDidMount() {
+        this.loadData();
     }
 }
 
