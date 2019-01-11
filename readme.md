@@ -10,3 +10,5 @@ https://facebook.github.io/react-native/docs/signed-apk-android
 
 https://github.com/expo/expo/issues/2115#issuecomment-416022745
 https://docs.expo.io/versions/v30.0.0/distribution/building-standalone-apps#3-start-the-build
+
+https://docs.expo.io/versions/latest/workflow/configuration

@@ -26,7 +26,13 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "nodomain.stswoon.workTime"
+      "package": "nodomain.stswoon.workTime",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_PHONE_STATE",
+        "android.permission.READ_CONTACTS"
+      ]
     }
   }
 }
